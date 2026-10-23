@@ -17,6 +17,10 @@ def fft(img: np.ndarray, twiddle: np.ndarray) -> np.ndarray:
     """DFT of a (height, width) image over its pixel centres' lattice, in fft order."""
     return np.fft.fft(np.fft.fft(img, axis=1) * twiddle, axis=0)
 
+def ifft(spectrum: np.ndarray, twiddle: np.ndarray) -> np.ndarray:
+    """Inverse of fft: a (height, width) image on the pixel lattice from its lattice DFT in fft order."""
+    return np.fft.ifft(np.fft.ifft(spectrum, axis=0) * twiddle.conj(), axis=1)
+
 def bin_freq(shape: Tuple[int, int], row_pitch: float) -> Tuple[np.ndarray, np.ndarray]:
     """Bin frequencies (fy, fx) in cycles per column pitch, in fft order."""
     return np.fft.fftfreq(shape[0], d=row_pitch), np.fft.fftfreq(shape[1])
