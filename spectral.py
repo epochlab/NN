@@ -31,7 +31,6 @@ def bin_freq(shape: Tuple[int, int], row_pitch: float, device: torch.device) -> 
 
 def alias_radius_sq(fy: torch.Tensor, fx: torch.Tensor, row_pitch: float, row_shift: float) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """Each bin folded to its nearest reciprocal-lattice point: squared radius and (fy, fx), the bin's true spatial frequency."""
-    # Reciprocal basis b1 = (1, -shift / pitch), b2 = (0, 1 / pitch); argmin keeps the first of tied images, order 0, -1, 1
     i, j = (t.reshape(-1, 1, 1) for t in torch.meshgrid(*2 * (torch.tensor([0.0, -1.0, 1.0], device=fy.device),), indexing="ij"))
     dy = (fy[:, None] + (i * row_shift - j) / row_pitch).expand(-1, -1, fx.numel())
     dx = (fx - i).expand(-1, fy.numel(), -1)
