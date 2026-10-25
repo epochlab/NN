@@ -1,6 +1,8 @@
-import math
+#!/usr/bin/env python3
+
 from typing import Tuple
 
+import math
 import torch
 
 from pathtracer import Camera
